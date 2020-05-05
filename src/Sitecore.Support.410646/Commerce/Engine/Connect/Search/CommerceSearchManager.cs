@@ -188,26 +188,33 @@
             return query;
         }
 
-
-        public bool IsItemCategory(Item item)
-        {
-            return item.TemplateID == CommerceConstants.KnownTemplateIds.CommerceCategoryTemplate;
-        }
-
-        public bool IsItemProduct(Item item)
-        {
-            return item.TemplateID == CommerceConstants.KnownTemplateIds.CommerceProductTemplate || item.TemplateID == CommerceConstants.KnownTemplateIds.CommerceBundleTemplate;
-        }
-
+        #region modified part
         public bool IsItemVariant(Item item)
         {
-            return item.TemplateID == CommerceConstants.KnownTemplateIds.CommerceProductVariantTemplate;
+            return TemplateManager.GetTemplate(item).DescendsFromOrEquals(KnownTemplateIds.CommerceProductVariantTemplate);
         }
 
         public bool IsItemNavigation(Item item)
         {
-            return item.TemplateID == CommerceConstants.KnownTemplateIds.CommerceNavigationItemTemplate;
+            return TemplateManager.GetTemplate(item).DescendsFromOrEquals(KnownTemplateIds.CommerceNavigationItemTemplate);
         }
+
+
+
+        public bool IsItemCategory(Item item)
+        {
+            return TemplateManager.GetTemplate(item).DescendsFromOrEquals(KnownTemplateIds.CommerceCategoryTemplate);
+        }
+
+        public bool IsItemProduct(Item item)
+        {
+            Template template = TemplateManager.GetTemplate(item);
+
+            return template.DescendsFromOrEquals(KnownTemplateIds.CommerceProductTemplate) || template.DescendsFromOrEquals(KnownTemplateIds.CommerceBundleTemplate);
+
+        }
+
+        #endregion
 
 
 

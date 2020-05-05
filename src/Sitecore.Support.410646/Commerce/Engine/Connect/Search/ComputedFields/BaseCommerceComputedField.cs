@@ -78,13 +78,15 @@
 
         #region Helper methods
 
+        #region modified part
+
         public bool IsItemPartOfValidTemplates(Item item)
         {
             Assert.IsNotNull(item, nameof(item));
 
             foreach (var templateID in this.ValidTemplates)
             {
-                if (item.TemplateID == templateID)
+                if (TemplateManager.GetTemplate(item).DescendsFromOrEquals(templateID))
                 {
                     return true;
                 }
@@ -92,7 +94,7 @@
 
             return false;
         }
-
+        #endregion
 
         public Item GetValidatedItem(IIndexable itemToIndex)
         {
